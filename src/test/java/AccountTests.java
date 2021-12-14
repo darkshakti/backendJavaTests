@@ -8,18 +8,14 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class AccountTests extends BaseTest {
     @Test
     void getAccountInfoTest() {
-        given()
-                .header("Authorization", token)
-                .when()
-                .get("https://api.imgur.com/3/account/{username}", username)
-                .then()
-                .statusCode(200);
+        given(requestWithAuth, positiveResponseSpecification)
+                .get("/account/{username}", username);
     }
 
     @Test
     void getAccountAccountWithLoggingTest() {
         given()
-                .header("Authorization", token)
+                .spec(requestWithAuth)
                 .log()
                 .method()
                 .log()
@@ -34,7 +30,7 @@ public class AccountTests extends BaseTest {
     @Test
     void getAccountInfoWithAssertionsInGivenTest() {
         given()
-                .header("Authorization", token)
+                .spec(requestWithAuth)
                 .log()
                 .method()
                 .log()
@@ -54,7 +50,7 @@ public class AccountTests extends BaseTest {
     @Test
     void getAccountInfoWithAssertionsAfterTest() {
         Response response = given()
-                .header("Authorization", token)
+                .spec(requestWithAuth)
                 .log()
                 .method()
                 .log()
